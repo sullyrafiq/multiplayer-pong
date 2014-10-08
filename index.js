@@ -11,12 +11,20 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(client){
-  console.log('a user connected');
+	client.on('join', function(name) {
+		console.log(name);
+		client.nickname = name;
+		io.emit('chat message', client.nickname + ": has joined the group!")
+	});	
 
-  client.on('chat message', function(msg){
-  	io.emit('chat message', msg);
-  });
-
+	client.on('chat message', function(msg){
+		console.log(msg);
+		io.emit('chat message', client.nickname + ": " + msg);
+	});
+	
+	client.on('disconnect', function(client){
+		io.emit('chat message', client.nickname + ": has left the group!")
+	})
 });
 
 http.listen(3000, function(){
