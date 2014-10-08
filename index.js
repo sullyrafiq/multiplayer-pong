@@ -38,15 +38,17 @@ io.on('connection', function(client){
 	});
 
     client.on('up', function(move){
-        if (client.nickname === pongGame.nameOfPlayer) {
-            pongGame.up();
-        }
+        // if (client.nickname === pongGame.nameOfPlayer) {
+        console.log('up');
+        pongGame.up();
+        // }
     });
 
     client.on('down', function(move){
-        if (client.nickname === pongGame.nameOfPlayer) {
-            pongGame.down();
-        }
+        //if (client.nickname === pongGame.nameOfPlayer) {
+        console.log('down');
+        pongGame.down();
+        //}
     });
 
     setInterval(function() {

@@ -272,13 +272,11 @@ PongGame.prototype.leftWins = function() {
 }
 
 PongGame.prototype.up = function() {
-    this.player.move(1);
-    this.checkForCollisions();
+    this.player.move(-1);
 }
 
 PongGame.prototype.down = function() {
-    this.player.move(-1);
-    this.checkForCollisions();
+    this.player.move(1);
 }
 
 PongGame.prototype.checkForCollisions = function() {

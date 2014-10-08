@@ -1,3 +1,4 @@
+//Client Side!!
 $(function() {
 	
 	var socket = io();
@@ -30,10 +31,7 @@ $(function() {
     });
 
     socket.on('status', function(data) {
-        console.log(data);
-        pong.ball.update(data.ball);
-        pong.player.update(data.player1);
-        pong.computer.update(data.player2);
+        pong.update(data);
     })
 		
 });

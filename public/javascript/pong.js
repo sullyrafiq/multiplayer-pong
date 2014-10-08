@@ -108,7 +108,7 @@
 
         this.config = config? config : {};
         this.socket = socket;
-        this.interval = this.config.interval || 20;
+        this.interval = this.config.interval || 10;
         // 0.5 == hard, 1.0 == normal, 1.5 == easy
         this.difficulty = this.config.difficulty || 1.0;
         this.color = this.config.color || '#0ce3ac';
@@ -205,10 +205,17 @@
         this.ball.draw(this.ctx);
     }
 
+    Pong.prototype.update = function(data) {
+        this.ball.update(data.ball);
+        this.player.update(data.player1);
+        this.computer.update(data.player2);
+        this.gameLoop();
+    }
+
     Pong.prototype.gameLoop = function() {
         var self = this;
         this.drawElements();
-        setTimeout(function() { self.gameLoop(); }, this.interval);
+        // setTimeout(function() { self.gameLoop(); }, this.interval);
     }
 
     exports.Pong = Pong;
