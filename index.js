@@ -29,7 +29,6 @@ io.on('connection', function(client){
 	});	
 
 	client.on('chat message', function(msg){
-		console.log(msg);
 		io.emit('chat message', client.nickname + ": " + msg);
 	});
 
