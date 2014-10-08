@@ -34,7 +34,8 @@ io.on('connection', function(client){
 	});
 
 	client.on('disconnect', function(msg){
-		io.emit('chat message', client.nickname + ": has left the group!")
+		io.emit('chat message', client.nickname + ": has left the group!");
+        pongGame.removePlayer(client.nickname);
 	});
 
     client.on('up', function(move){

@@ -17,6 +17,17 @@ PongGame.prototype.addPlayer = function(name) {
     }
 }
 
+PongGame.prototype.removePlayer = function(name) {
+    if (this.playerOne.nickname === name) {
+        delete this.playerOne.nickname;
+        this.newGame();
+
+    } else if (this.playerTwo.nickname === name) {
+        delete this.playerTwo.nickname;
+        this.newGame();
+    }
+}
+
 PongGame.prototype.status = function() {
     var self = this;
     return {
