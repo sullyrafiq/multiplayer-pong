@@ -1,8 +1,8 @@
 body {
     font: 13px Helvetica, Arial;
     background: url("../images/rsz_extreme-pong.jpg");
+    background-size: 1450px 990px;
     background-repeat: no-repeat;
-    background-size: cover;
 }
 header {
     height: 100px;
@@ -15,7 +15,6 @@ header {
     padding: 12px;
 }
 .the-game {
-    border: 1px solid blue;
     display: inline-block;
     height: 500px;
     margin-left: 105px;
@@ -23,11 +22,10 @@ header {
     width: 960px;
 }
 .chat-room {
-    border: 1px solid red;
     display: inline-block;
     height: 500px;
     vertical-align: top;
-    width: 280px;
+    width: 260px;
 }
 .main-room {
     height: 450px;
