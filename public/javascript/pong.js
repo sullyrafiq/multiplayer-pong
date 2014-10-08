@@ -214,7 +214,6 @@
         this.ball.update(data.ball);
         this.player.update(data.player1);
         this.computer.update(data.player2);
-        //this.gameLoop();
         this.snd_left.play();
     }
 

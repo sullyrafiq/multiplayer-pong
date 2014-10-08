@@ -38,17 +38,25 @@ io.on('connection', function(client){
 	});
 
     client.on('up', function(move){
-        // if (client.nickname === pongGame.nameOfPlayer) {
-        console.log('up');
-        pongGame.up();
-        // }
+        if (client.nickname === pongGame.playerOne.nickname) {
+            pongGame.movePlayerOne(-1);
+
+        } else if (client.nickname === pongGame.playerTwo.nickname) {
+            pongGame.movePlayerTwo(-1);
+        }
+
+        io.emit('status', pongGame.status());
     });
 
     client.on('down', function(move){
-        //if (client.nickname === pongGame.nameOfPlayer) {
-        console.log('down');
-        pongGame.down();
-        //}
+        if (client.nickname === pongGame.playerOne.nickname) {
+            pongGame.movePlayerOne(1);
+
+        } else if (client.nickname === pongGame.playerTwo.nickname) {
+            pongGame.movePlayerTwo(1);
+        }
+
+        io.emit('status', pongGame.status());
     });
 
     setInterval(function() {

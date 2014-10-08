@@ -4,8 +4,10 @@ $(function() {
 	var socket = io();
 
     socket.on('connect', function(data) {
-      nickname = prompt("Please enter a nickname!", "nickname");
-      socket.emit('join', nickname);
+      var nickname = prompt("Please enter a nickname!", "nickname");
+      if (nickname !== null && nickname.trim() !== '') {
+        socket.emit('join', nickname);
+      }
     });
 
     $('form').submit(function() {
