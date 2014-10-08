@@ -1,21 +1,27 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>Multiplayer Pong</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
-  </head>
-  <body>
+</head>
+<body>
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+        <input id="m" autocomplete="off"/>
+        <button>Send</button>
     </form>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-
+  <script src="/javascript/main.js"></script>
   <script>
     var socket = io();
     
+    socket.on('connect', function(data) {
+      nickname = prompt("Please enter a nickname!", "nickname");
+      socket.emit('join', nickname);
+    });
+
     $('form').submit(function() {
       socket.emit('chat message', $('#m').val());
       $('#m').val('');
@@ -30,6 +36,5 @@
         $('#messages').append($('<li>').text(JSON.stringify(msg)));
     });
   </script>
-
-  </body>
+</body>
 </html>

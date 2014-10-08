@@ -1,4 +1,4 @@
-multiplayer-pong
+Multiplayer Pong
 ================
 
 Node app making use of the game logic found at:
@@ -9,4 +9,12 @@ App based on guide found at
 
 http://socket.io/get-started/chat/
 
-Once node is installed, run 'node index' and go to http://localhost:3000 in the browser.
+
+Running the app
+===============
+
+execute 'npm install --save'
+
+execute 'node index'
+
+Go to http://localhost:3000 in the browser.
