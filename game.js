@@ -18,6 +18,14 @@ PongGame.prototype.status = {
 
 PongGame.prototype.newPlayer = function(nickname) {
     this.players[nickname] = {paddle: 0, score: 0};
+    var playerSide = this.players.length == 0 ? 'left': 'right';
+    this.paddles[nickname] = new Paddle(this, playerSide);
+    if (playerSide == 'left') {
+        this.left = this.paddles[nickname];
+    } else {
+        this.right = this.paddles[nickname];
+    }
+
     this.status["players"] = this.players;
 }
 
@@ -27,23 +35,24 @@ PongGame.prototype.initialize = function() {
     this.height = 500;//this.canvas.height;
 
     this.config = {};
+    this.paddles = {};
 
-    var playerSide = this.config.playerSide || 'left';
-    this.player = new Paddle(this, playerSide);
-    this.computer = new Paddle(this, playerSide == 'left' ? 'right': 'left');
+   // var playerSide = this.config.playerSide || 'left';
+  //  this.player = new Paddle(this, playerSide);
+   // this.computer = new Paddle(this, playerSide == 'left' ? 'right': 'left');
 
-    if (playerSide == 'left') {
-        this.left = this.player;
-        this.right = this.computer;
-    } else {
-        this.left = this.computer;
-        this.right = this.player;
-    }
+   // if (playerSide == 'left') {
+    //    this.left = this.player;
+    //    this.right = this.computer;
+   // } else {
+  //      this.left = this.computer;
+    //    this.right = this.player;
+   // }
 
     // Create the game ball.
     this.ball = new Ball(this);
 
-    this.score = {'left': 0, 'right': 0};
+ //   this.score = {'left': 0, 'right': 0};
 
     this.keyState = {};
     var self = this;
@@ -239,20 +248,23 @@ Ball.prototype.reflectOnCollision = function(paddle) {
 
 PongGame.prototype.newGame = function() {
     this.ball.reset();
-    this.player.reset();
-    this.computer.reset();
+    for (var playerName in this.players) {
+        this.paddles[playerName].reset();
+    }
 }
 
+   //TODO: this
 PongGame.prototype.rightWins = function() {
-    this.score['right'] += 1;
-    outgoing.Events.emit('right-score', this.score);
-    this.newGame();
+ //   this.score['right'] += 1;
+ //   outgoing.Events.emit('right-score', this.score);
+  //  this.newGame();
 }
 
+//TODO: this
 PongGame.prototype.leftWins = function() {
-    this.score['left'] += 1;
-    outgoing.Events.emit('left-score', this.score);
-    this.newGame();
+   // this.score['left'] += 1;
+ //  outgoing.Events.emit('left-score', this.score);
+  //  this.newGame();
 }
 
 
