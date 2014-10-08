@@ -119,6 +119,10 @@
     }
 
     Pong.prototype.initialize = function() {
+
+        this.snd_left = new Audio("audio/bounce-left.wav"); // buffers automatically when created
+        this.snd_left.play();
+
         if (this.canvas.getContext) {
             this.ctx = this.canvas.getContext('2d');
         } else {
@@ -171,7 +175,8 @@
         document.onkeyup = makeHandler(false);
 
         this.newGame();
-        this.gameLoop();
+
+        setInterval(function() { self.gameLoop(); }, 10);
 
         return true;
     }
@@ -209,13 +214,13 @@
         this.ball.update(data.ball);
         this.player.update(data.player1);
         this.computer.update(data.player2);
-        this.gameLoop();
+        //this.gameLoop();
+        this.snd_left.play();
     }
 
     Pong.prototype.gameLoop = function() {
         var self = this;
         this.drawElements();
-        // setTimeout(function() { self.gameLoop(); }, this.interval);
     }
 
     exports.Pong = Pong;
