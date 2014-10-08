@@ -17,5 +17,7 @@ $(function() {
       $('#messages').append($('<li>').text(msg));
       $('.main-room').scrollTop($('.main-room').prop("scrollHeight"));
     });
+
+    var pong = new Common.Pong('pong');
 		
 });
