@@ -5,36 +5,29 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
 <body>
-    <ul id="messages"></ul>
-    <form action="">
-        <input id="m" autocomplete="off"/>
-        <button>Send</button>
-    </form>
+
+    <div class="container">
+        <div class="the-game">
+            <canvas width="800" height="500"></canvas>
+        </div>
+        <div class="chat-room">
+            <div class="main-room">
+                <ul id="messages"></ul>
+            </div>
+
+
+            <div class="chat-input">
+                <form action="">
+                    <input id="m" autocomplete="off"/>
+                    <button>Send</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="/javascript/main.js"></script>
-  <script>
-    var socket = io();
-    
-    socket.on('connect', function(data) {
-      nickname = prompt("Please enter a nickname!", "nickname");
-      socket.emit('join', nickname);
-    });
-
-    $('form').submit(function() {
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
-
-    socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
-    });
-
-    socket.on('game status', function(msg){
-        $('#messages').append($('<li>').text(JSON.stringify(msg)));
-    });
-  </script>
 </body>
 </html>

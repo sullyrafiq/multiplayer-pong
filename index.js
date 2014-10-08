@@ -14,14 +14,11 @@ app.get('/', function(req, res){
 });
 
 console.log(gamePlay);
-//gamePlay.gamePlay();
 
 gamePlay.gamePlay.testThis();
-//.testThis();
 
 io.on('connection', function(client){
 	client.on('join', function(name) {
-		console.log(name);
 		client.nickname = name;
 		io.emit('chat message', client.nickname + ": has joined the group!")
 	});	
@@ -35,11 +32,6 @@ io.on('connection', function(client){
 		io.emit('chat message', client.nickname + ": has left the group!")
 	})
 
-   // var gamePlay = gamePlay.gamePlay()
-   // var pong = new gamePlay.Pong();
-   // pong.Events.on('left-score', function(score) {
-   //     console.log("hello");
-   // });
     game.statusTimer=setInterval(game.sendStatus, 1000); //1000 will  run it every 1 second
 });
 
