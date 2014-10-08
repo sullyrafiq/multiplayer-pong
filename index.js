@@ -7,6 +7,7 @@ var game = game || {};
 
 app.use("/css", express.static(__dirname + '/css'));
 app.use("/javascript", express.static(__dirname + '/javascript'));
+app.use("/images", express.static(__dirname + '/images'));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
@@ -27,7 +28,7 @@ io.on('connection', function(client){
 		console.log(msg);
 		io.emit('chat message', client.nickname + ": " + msg);
 	});
-	
+
 	client.on('disconnect', function(client){
 		io.emit('chat message', client.nickname + ": has left the group!")
 	})
