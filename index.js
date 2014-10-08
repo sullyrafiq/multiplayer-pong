@@ -34,7 +34,15 @@ io.on('connection', function(client){
 
 	client.on('disconnect', function(client){
 		io.emit('chat message', client.nickname + ": has left the group!")
-	})
+	});
+
+    client.on('up', function(client){
+        pongGame.up(client.nickname);
+    });
+
+    client.on('down', function(client){
+        pongGame.down(client.nickname);
+    });
 
     game.statusTimer=setInterval(game.sendStatus, 1000); //1000 will  run it every 1 second
 });
