@@ -4,10 +4,20 @@ function PongGame() {
 
 };
 
+PongGame.prototype.players = {};
+
 PongGame.prototype.status = {
-    paddles: [0.9, 0.8],
+    players: this.players,
+    ball: [0.5, 0.2]
+    /*
+    paddles: {player1: 0.9, player2: 0.8},
     ball: [0.5, 0.2],
     score: { player1: 100, player2: 200}
+    */
+}
+
+PongGame.prototype.newPlayer = function(nickname) {
+    this.players[nickname] = {paddle: 0, score: 0};
 }
 
 PongGame.prototype.initialize = function() {

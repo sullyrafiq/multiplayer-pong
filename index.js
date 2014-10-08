@@ -16,15 +16,12 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
 
-//console.log(gamePlay);
-
-//gamePlay.gamePlay.testThis();
-//var stuff = gamePlay.gamePlay;
 pongGame.initialize();
 
 io.on('connection', function(client){
 	client.on('join', function(name) {
 		client.nickname = name;
+        pongGame.newPlayer(client.nickname);
 		io.emit('chat message', client.nickname + ": has joined the group!")
 	});	
 
@@ -52,8 +49,9 @@ http.listen(app.get('port'), function(){
 });
 
 game.sendStatus = function()
-{
-    io.emit('game status', pongGame.nextMove());
+{   var status = pongGame.nextMove();
+    console.log(status);
+    io.emit('game status', status);
 }
 
 
