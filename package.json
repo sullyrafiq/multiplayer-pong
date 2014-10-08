@@ -1,0 +1,9 @@
+{
+  "name": "multiplayer-pong",
+  "version": "0.0.1",
+  "description": "Multiplayer pong using socket IO and node",
+  "dependencies": {
+    "express": "~4.9.5",
+    "socket.io": "~1.1.0"
+  }
+}
