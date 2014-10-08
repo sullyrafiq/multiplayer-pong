@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var gamePlay = require('./game.js');
+var pongGame = require('./game.js').pongGame;
 var game = game || {};
 
 app.use("/css", express.static(__dirname + '/css'));
@@ -14,9 +14,11 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
 
-console.log(gamePlay);
+//console.log(gamePlay);
 
-gamePlay.gamePlay.testThis();
+//gamePlay.gamePlay.testThis();
+//var stuff = gamePlay.gamePlay;
+pongGame.initialize();
 
 io.on('connection', function(client){
 	client.on('join', function(name) {
