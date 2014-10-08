@@ -41,6 +41,7 @@ io.on('connection', function(client){
         // if (client.nickname === pongGame.nameOfPlayer) {
         console.log('up');
         pongGame.up();
+        io.emit('status', pongGame.status());
         // }
     });
 
@@ -48,6 +49,7 @@ io.on('connection', function(client){
         //if (client.nickname === pongGame.nameOfPlayer) {
         console.log('down');
         pongGame.down();
+        io.emit('status', pongGame.status());
         //}
     });
 
