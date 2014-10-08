@@ -9,6 +9,8 @@ app.use("/css", express.static(__dirname + '/css'));
 app.use("/javascript", express.static(__dirname + '/javascript'));
 app.use(express.static(__dirname + '/public'));
 
+app.set('port', (process.env.PORT || 3000))
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
@@ -35,7 +37,7 @@ io.on('connection', function(client){
     game.statusTimer=setInterval(game.sendStatus, 1000); //1000 will  run it every 1 second
 });
 
-http.listen(3000, function(){
+http.listen(app.get('port'), function(){
   console.log('listening on *:3000');
 });
 
