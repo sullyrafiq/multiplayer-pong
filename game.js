@@ -18,6 +18,7 @@ PongGame.prototype.status = {
 
 PongGame.prototype.newPlayer = function(nickname) {
     this.players[nickname] = {paddle: 0, score: 0};
+    this.status["players"] = this.players;
 }
 
 PongGame.prototype.initialize = function() {
