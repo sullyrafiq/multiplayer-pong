@@ -27,7 +27,7 @@ io.on('connection', function(client){
 		io.emit('chat message', client.nickname + ": has left the group!")
 	})
 
-    game.statusTimer = setInterval(game.sendStatus, 1000); //1000 will  run it every 1 second
+    // game.statusTimer = setInterval(game.sendStatus, 1000); //1000 will  run it every 1 second
 });
 
 http.listen(3000, function(){

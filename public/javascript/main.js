@@ -16,9 +16,5 @@ $(function() {
     socket.on('chat message', function(msg){
       $('#messages').append($('<li>').text(msg));
     });
-
-    socket.on('game status', function(msg){
-        $('#messages').append($('<li>').text(JSON.stringify(msg)));
-    });
 		
 });
