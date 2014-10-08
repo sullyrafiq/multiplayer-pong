@@ -34,6 +34,13 @@ $(function() {
 
     socket.on('status', function(data) {
         pong.update(data);
-    })
+    });
+
+    socket.on('bounce', function(msg) {
+        this.snd = new Audio("audio/" + msg + ".wav");
+        //this.snd_left = new Audio("audio/bounce-left.wav"); // buffers automatically when created
+        this.snd.play();
+        console.log("played sound " + "audio/" + msg + ".wav");
+    });
 		
 });

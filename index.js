@@ -60,7 +60,10 @@ io.on('connection', function(client){
     });
 
     setInterval(function() {
-        pongGame.gameLoop();
+        var collision = pongGame.gameLoop();
+        if (collision != null) {
+            io.emit('bounce', collision);
+        }
         io.emit('status', pongGame.status());
 
     }, 50);

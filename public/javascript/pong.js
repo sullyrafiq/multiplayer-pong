@@ -120,8 +120,6 @@
 
     Pong.prototype.initialize = function() {
 
-        this.snd_left = new Audio("audio/bounce-left.wav"); // buffers automatically when created
-        this.snd_left.play();
 
         if (this.canvas.getContext) {
             this.ctx = this.canvas.getContext('2d');
@@ -235,7 +233,6 @@
         this.ball.update(data.ball);
         this.player.update(data.player1);
         this.computer.update(data.player2);
-        this.snd_left.play();
     }
 
     Pong.prototype.gameLoop = function() {

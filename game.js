@@ -228,8 +228,9 @@ Ball.prototype.collisionTest = function(paddle) {
             (this.y >= bounds[2] && this.y <= bounds[3]));
 }
 
-Ball.prototype.reflectOnCollision = function(paddle) {
+Ball.prototype.reflectOnCollision = function(paddle, collisionMessage) {
     if (this.collisionTest(paddle)) {
+
         var verticalOffset = Math.abs(this.y - paddle.y);
         if (verticalOffset < (paddle.height * .4)) {
             this.dy -= 1;
@@ -249,6 +250,9 @@ Ball.prototype.reflectOnCollision = function(paddle) {
             this.x = paddle.x - this.size;
         }
         this.dx *= -1;
+        return collisionMessage;
+    } else {
+        return null;
     }
 }
 
@@ -282,8 +286,10 @@ PongGame.prototype.checkForCollisions = function() {
     this.computer.autoMove(this.ball);
     if (this.ball.dx > 0) {
         this.ball.reflectOnCollision(this.right);
+        return "right-collision";
     } else if (this.ball.dx < 0) {
         this.ball.reflectOnCollision(this.left);
+        return "left-collision";
     }
 }
 
@@ -291,11 +297,12 @@ PongGame.prototype.gameLoop = function() {
     if (this.isRunning()) {
         this.ball.move();
         if (this.ball.dx > 0) {
-            this.ball.reflectOnCollision(this.right);
+            return this.ball.reflectOnCollision(this.right, "bounce-right");
         } else if (this.ball.dx < 0) {
-            this.ball.reflectOnCollision(this.left);
+            return this.ball.reflectOnCollision(this.left, "bounce-left");
         }
     }
+    return null;
 }
 
 exports.pongGame = pongGame;
