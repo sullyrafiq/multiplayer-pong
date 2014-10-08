@@ -23,18 +23,13 @@ $(function() {
 
     var pong = new Common.Pong('pong', null, socket);
 
-    var playerScore = $('span#player-score');
-    var computerScore = $('span#computer-score');
-    Common.Events.on('left-score', function(score) {
-        playerScore.text(score.left);
-    });
-    Common.Events.on('right-score', function(score) {
-        computerScore.text(score.right);
-    });
-
     socket.on('status', function(data) {
         pong.update(data);
-    });
+        var playerScore = $('span#player-score');
+        var computerScore = $('span#computer-score');
+        playerScore.text(data.player1.score);
+        computerScore.text(data.player2.score);
+    })
 
     socket.on('bounce', function(msg) {
         this.snd = new Audio("audio/" + msg + ".wav");

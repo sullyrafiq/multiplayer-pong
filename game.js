@@ -21,10 +21,12 @@ PongGame.prototype.removePlayer = function(name) {
     if (this.playerOne.nickname === name) {
         delete this.playerOne.nickname;
         this.newGame();
+        this.score = {'left': 0, 'right': 0};
 
     } else if (this.playerTwo.nickname === name) {
         delete this.playerTwo.nickname;
         this.newGame();
+        this.score = {'left': 0, 'right': 0};
     }
 }
 
