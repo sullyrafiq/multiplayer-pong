@@ -58,14 +58,13 @@ io.on('connection', function(client){
 
         io.emit('status', pongGame.status());
     });
-
-    setInterval(function() {
-        pongGame.gameLoop();
-        io.emit('status', pongGame.status());
-
-    }, 50);
-
 });
+
+setInterval(function() {
+    pongGame.gameLoop();
+    io.emit('status', pongGame.status());
+
+}, 20);
 
 http.listen(app.get('port'), function(){
   console.log('listening on *:3000');

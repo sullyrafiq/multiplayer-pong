@@ -27,10 +27,12 @@ PongGame.prototype.status = function() {
             dy : self.ball.dy
         },
         player1: {
+            score: self.score['left'],
             x : self.playerOne.x,
             y : self.playerOne.y
         },
         player2: {
+            score: self.score['right'],
             x : self.playerTwo.x,
             y : self.playerTwo.y
         }};
@@ -60,6 +62,8 @@ PongGame.prototype.initialize = function(nickname) {
 
     // Create the game ball.
     this.ball = new Ball(this);
+
+    this.score = {'left': 0, 'right': 0};
 
     this.keyState = {};
     var self = this;
@@ -259,14 +263,12 @@ PongGame.prototype.newGame = function() {
 }
 
 PongGame.prototype.rightWins = function() {
-    // this.score['right'] += 1;
-    // outgoing.Events.emit('right-score', this.score);
+    this.score['right'] += 1;
     this.newGame();
 }
 
 PongGame.prototype.leftWins = function() {
-   // this.score['left'] += 1;
-   // outgoing.Events.emit('left-score', this.score);
+    this.score['left'] += 1;
     this.newGame();
 }
 

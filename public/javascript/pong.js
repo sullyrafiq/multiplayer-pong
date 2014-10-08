@@ -208,18 +208,6 @@
         this.computer.reset();
     }
 
-    Pong.prototype.rightWins = function() {
-        this.score['right'] += 1;
-        exports.Events.emit('right-score', this.score);
-        this.newGame();
-    }
-
-    Pong.prototype.leftWins = function() {
-        this.score['left'] += 1;
-        exports.Events.emit('left-score', this.score);
-        this.newGame();
-    }
-
     Pong.prototype.drawElements = function() {
         // Draw a black background.
         this.ctx.fillStyle = this.background;
@@ -235,6 +223,10 @@
         this.ball.update(data.ball);
         this.player.update(data.player1);
         this.computer.update(data.player2);
+
+        exports.Events.emit('left-score', data.player1.score);
+        exports.Events.emit('right-score', data.player2.score);
+
         this.snd_left.play();
     }
 
