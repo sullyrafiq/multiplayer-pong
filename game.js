@@ -1,58 +1,65 @@
 var pongGame = new PongGame();
 
 function PongGame() {
-
+    this.running = false;
 };
 
-PongGame.prototype.players = {};
-
-PongGame.prototype.status = {
-    players: this.players,
-    ball: [0.5, 0.2]
-    /*
-    paddles: {player1: 0.9, player2: 0.8},
-    ball: [0.5, 0.2],
-    score: { player1: 100, player2: 200}
-    */
+PongGame.prototype.isRunning = function() {
+    return this.running;
 }
 
-PongGame.prototype.newPlayer = function(nickname) {
-    this.players[nickname] = {paddle: 0, score: 0};
-    var playerSide = this.players.length == 0 ? 'left': 'right';
-    this.paddles[nickname] = new Paddle(this, playerSide);
-    if (playerSide == 'left') {
-        this.left = this.paddles[nickname];
-    } else {
-        this.right = this.paddles[nickname];
-    }
-
-    this.status["players"] = this.players;
+PongGame.prototype.nameOfPlayer = function() {
+    return this.nickname;
 }
 
-PongGame.prototype.initialize = function() {
+PongGame.prototype.status = function() {
+    var self = this;
+    return {
+        ball: {
+            x : self.ball.x,
+            y : self.ball.y,
+            dx : self.ball.dx,
+            dy : self.ball.dy
+        },
+        player1: {
+            x : self.player.x,
+            y : self.player.y
+        },
+        player2: {
+            x : self.computer.x,
+            y : self.computer.y
+        }};
+}
 
-    this.width = 800;//this.canvas.width;  TODO: per player width!!!
-    this.height = 500;//this.canvas.height;
+PongGame.prototype.addPlayer = function(playerName) {
+    this.running = true;
+    this.nickname = playerName;
+}
+
+PongGame.prototype.initialize = function(nickname) {
+
+    this.width = 800;
+    this.height = 500;
 
     this.config = {};
-    this.paddles = {};
+    this.interval = this.config.interval || 20;
+    // 0.5 == hard, 1.0 == normal, 1.5 == easy
+    this.difficulty = this.config.difficulty || 1.0;
 
-   // var playerSide = this.config.playerSide || 'left';
-  //  this.player = new Paddle(this, playerSide);
-   // this.computer = new Paddle(this, playerSide == 'left' ? 'right': 'left');
+    var playerSide = this.config.playerSide || 'left';
+    this.player = new Paddle(this, playerSide);
+    this.computer = new Paddle(this, playerSide == 'left' ? 'right': 'left');
 
-   // if (playerSide == 'left') {
-    //    this.left = this.player;
-    //    this.right = this.computer;
-   // } else {
-  //      this.left = this.computer;
-    //    this.right = this.player;
-   // }
+    if (playerSide == 'left') {
+        this.left = this.player;
+        this.right = this.computer;
+   } else {
+        this.left = this.computer;
+        this.right = this.player;
+   }
 
     // Create the game ball.
     this.ball = new Ball(this);
-
- //   this.score = {'left': 0, 'right': 0};
 
     this.keyState = {};
     var self = this;
@@ -248,47 +255,49 @@ Ball.prototype.reflectOnCollision = function(paddle) {
 
 PongGame.prototype.newGame = function() {
     this.ball.reset();
-    for (var playerName in this.players) {
-        this.paddles[playerName].reset();
-    }
+    this.player.reset();
+    this.computer.reset();
 }
 
-   //TODO: this
 PongGame.prototype.rightWins = function() {
- //   this.score['right'] += 1;
- //   outgoing.Events.emit('right-score', this.score);
-  //  this.newGame();
+    // this.score['right'] += 1;
+    // outgoing.Events.emit('right-score', this.score);
+    this.newGame();
 }
 
-//TODO: this
 PongGame.prototype.leftWins = function() {
    // this.score['left'] += 1;
- //  outgoing.Events.emit('left-score', this.score);
-  //  this.newGame();
+   // outgoing.Events.emit('left-score', this.score);
+    this.newGame();
 }
 
-
-PongGame.prototype.nextMove = function() {
-    this.ball.move();
-    return this.status;
-}
-
-PongGame.prototype.up = function(playerName) {
+PongGame.prototype.up = function() {
     this.player.move(1);
-    this.checkForCollisions(playerName);
+    this.checkForCollisions();
 }
 
-PongGame.prototype.down = function(playerName) {
+PongGame.prototype.down = function() {
     this.player.move(-1);
-    this.checkForCollisions(playerName);
+    this.checkForCollisions();
 }
 
-PongGame.prototype.checkForCollisions = function(playerName) {
+PongGame.prototype.checkForCollisions = function() {
     this.computer.autoMove(this.ball);
     if (this.ball.dx > 0) {
         this.ball.reflectOnCollision(this.right);
     } else if (this.ball.dx < 0) {
         this.ball.reflectOnCollision(this.left);
+    }
+}
+
+PongGame.prototype.gameLoop = function() {
+    var self = this;
+    this.ball.move();
+//    this.computer.autoMove(this.ball);
+    if (this.ball.dx > 0) {
+      this.ball.reflectOnCollision(this.right);
+    } else if (this.ball.dx < 0) {
+      this.ball.reflectOnCollision(this.left);
     }
 }
 

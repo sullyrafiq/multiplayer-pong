@@ -28,5 +28,10 @@ $(function() {
     Common.Events.on('right-score', function(score) {
         computerScore.text(score.right);
     });
+
+    socket.on('status', function(data) {
+        console.log(data);
+        pong.ball.update(data);
+    })
 		
 });

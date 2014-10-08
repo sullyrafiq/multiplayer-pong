@@ -19,11 +19,15 @@ app.get('/', function(req, res){
 pongGame.initialize();
 
 io.on('connection', function(client){
-	client.on('join', function(name) {
+
+    client.on('join', function(name) {
 		client.nickname = name;
-        pongGame.newPlayer(client.nickname);
 		io.emit('chat message', client.nickname + ": has joined the group!")
-	});	
+
+        if (!pongGame.isRunning()) {
+            pongGame.addPlayer(client.nickname);
+        }
+	});
 
 	client.on('chat message', function(msg){
 		io.emit('chat message', client.nickname + ": " + msg);
@@ -34,24 +38,27 @@ io.on('connection', function(client){
 	});
 
     client.on('up', function(client){
-        pongGame.up(client.nickname);
+        if (client.nickname === pongGame.nameOfPlayer) {
+            pongGame.up();
+        }
     });
 
     client.on('down', function(client){
-        pongGame.down(client.nickname);
+        if (client.nickname === pongGame.nameOfPlayer) {
+            pongGame.down();
+        }
     });
 
-    game.statusTimer=setInterval(game.sendStatus, 1000); //1000 will  run it every 1 second
+    setInterval(function() {
+        pongGame.gameLoop();
+        io.emit('status', pongGame.status());
+
+    }, 50);
+
 });
 
 http.listen(app.get('port'), function(){
   console.log('listening on *:3000');
 });
-
-game.sendStatus = function() {
-    var status = pongGame.nextMove();
-    console.log(status);
-    io.emit('game status', status);
-}
 
 

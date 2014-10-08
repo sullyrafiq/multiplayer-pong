@@ -65,6 +65,13 @@
         this.reset();
     }
 
+    Ball.prototype.update = function(data) {
+        this.x = data.ball.x;
+        this.y = data.ball.y;
+        this.dx = data.ball.dx;
+        this.dy = data.ball.dy;
+    }
+
     Ball.prototype.reset = function(direction) {
         direction = direction || -1;
 
