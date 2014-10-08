@@ -33,17 +33,17 @@ io.on('connection', function(client){
 		io.emit('chat message', client.nickname + ": " + msg);
 	});
 
-	client.on('disconnect', function(client){
+	client.on('disconnect', function(msg){
 		io.emit('chat message', client.nickname + ": has left the group!")
 	});
 
-    client.on('up', function(client){
+    client.on('up', function(move){
         if (client.nickname === pongGame.nameOfPlayer) {
             pongGame.up();
         }
     });
 
-    client.on('down', function(client){
+    client.on('down', function(move){
         if (client.nickname === pongGame.nameOfPlayer) {
             pongGame.down();
         }

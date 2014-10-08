@@ -34,6 +34,11 @@
         this.dy = Math.ceil(this.height / 10);
     }
 
+    Paddle.prototype.update = function(paddle) {
+        this.x = paddle.x;
+        this.y = paddle.y;
+    }
+
     Paddle.prototype.reset = function() {
         this.y = this.startY;
     }
@@ -65,11 +70,11 @@
         this.reset();
     }
 
-    Ball.prototype.update = function(data) {
-        this.x = data.ball.x;
-        this.y = data.ball.y;
-        this.dx = data.ball.dx;
-        this.dy = data.ball.dy;
+    Ball.prototype.update = function(ball) {
+        this.x = ball.x;
+        this.y = ball.y;
+        this.dx = ball.dx;
+        this.dy = ball.dy;
     }
 
     Ball.prototype.reset = function(direction) {

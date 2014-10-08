@@ -31,9 +31,9 @@ PongGame.prototype.status = function() {
         }};
 }
 
-PongGame.prototype.addPlayer = function(playerName) {
+PongGame.prototype.addPlayer = function(nameOfPlayer) {
     this.running = true;
-    this.nickname = playerName;
+    this.nameOfPlayer = nameOfPlayer;
 }
 
 PongGame.prototype.initialize = function(nickname) {
@@ -293,7 +293,7 @@ PongGame.prototype.checkForCollisions = function() {
 PongGame.prototype.gameLoop = function() {
     var self = this;
     this.ball.move();
-//    this.computer.autoMove(this.ball);
+    this.computer.autoMove(this.ball);
     if (this.ball.dx > 0) {
       this.ball.reflectOnCollision(this.right);
     } else if (this.ball.dx < 0) {
