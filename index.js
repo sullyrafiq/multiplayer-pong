@@ -43,11 +43,7 @@ http.listen(3000, function(){
 
 game.sendStatus = function()
 {
-    io.emit('game status', game.Status);
+    io.emit('game status', pongGame.nextMove());
 }
 
-game.Status = {
-    paddles: [0.9, 0.8],
-    ball: [0.5, 0.2],
-    score: { player1: 100, player2: 200}
-}
+

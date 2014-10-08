@@ -1,16 +1,20 @@
-var gamePlay2 = gamePlay2 || {};
-
-gamePlay2.testThis = function() {
-    console.log("sorted");
-}
-
 var pongGame = new PongGame();
 
 function PongGame() {
 
 };
 
+PongGame.prototype.status = {
+    paddles: [0.9, 0.8],
+    ball: [0.5, 0.2],
+    score: { player1: 100, player2: 200}
+}
+
 PongGame.prototype.initialize = function() {
+
+    this.width = 800;//this.canvas.width;  TODO: per player width!!!
+    this.height = 500;//this.canvas.height;
+
     this.config = {};
 
     var playerSide = this.config.playerSide || 'left';
@@ -33,15 +37,11 @@ PongGame.prototype.initialize = function() {
     this.keyState = {};
     var self = this;
 
-    //this.newGame();
+    this.newGame();
    // this.gameLoop();
 
     return true;
 };
-
-
-
-
 
 
 function Paddle(game, leftOrRight, offset) {
@@ -226,10 +226,65 @@ Ball.prototype.reflectOnCollision = function(paddle) {
     }
 }
 
+PongGame.prototype.newGame = function() {
+    this.ball.reset();
+    this.player.reset();
+    this.computer.reset();
+}
+
+PongGame.prototype.rightWins = function() {
+    this.score['right'] += 1;
+    outgoing.Events.emit('right-score', this.score);
+    this.newGame();
+}
+
+PongGame.prototype.leftWins = function() {
+    this.score['left'] += 1;
+    outgoing.Events.emit('left-score', this.score);
+    this.newGame();
+}
 
 
+PongGame.prototype.nextMove = function() {
+    this.ball.move();
+    return this.status;
+}
 
+PongGame.prototype.up = function(playerName) {
+    this.player.move(1);
+    this.checkForCollisions(playerName);
+}
 
+PongGame.prototype.down = function(playerName) {
+    this.player.move(-1);
+    this.checkForCollisions(playerName);
+}
+
+PongGame.prototype.checkForCollisions = function(playerName) {
+    this.computer.autoMove(this.ball);
+    if (this.ball.dx > 0) {
+        this.ball.reflectOnCollision(this.right);
+    } else if (this.ball.dx < 0) {
+        this.ball.reflectOnCollision(this.left);
+    }
+}
+
+/*var self = this;
+this.ball.move();
+if (this.keyState[DOWN]) {
+    this.player.move(1);
+} else if (this.keyState[UP]) {
+    this.player.move(-1);
+}
+this.computer.autoMove(this.ball);
+if (this.ball.dx > 0) {
+    this.ball.reflectOnCollision(this.right);
+} else if (this.ball.dx < 0) {
+    this.ball.reflectOnCollision(this.left);
+}
+this.drawElements();
+setTimeout(function() { self.gameLoop(); }, this.interval);
+*/
 
 
 
