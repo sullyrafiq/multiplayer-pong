@@ -16,15 +16,12 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
 
-//console.log(gamePlay);
-
-//gamePlay.gamePlay.testThis();
-//var stuff = gamePlay.gamePlay;
 pongGame.initialize();
 
 io.on('connection', function(client){
 	client.on('join', function(name) {
 		client.nickname = name;
+        pongGame.newPlayer(client.nickname);
 		io.emit('chat message', client.nickname + ": has joined the group!")
 	});	
 
@@ -36,14 +33,13 @@ io.on('connection', function(client){
 		io.emit('chat message', client.nickname + ": has left the group!")
 	});
 
-    client.on('up', function(msg){
-        console.log("Up pressed");
+    client.on('up', function(client){
+        pongGame.up(client.nickname);
     });
 
-    client.on('down', function(msg){
-        console.log("Down pressed");
+    client.on('down', function(client){
+        pongGame.down(client.nickname);
     });
-
 
     game.statusTimer=setInterval(game.sendStatus, 1000); //1000 will  run it every 1 second
 });
@@ -52,13 +48,10 @@ http.listen(app.get('port'), function(){
   console.log('listening on *:3000');
 });
 
-game.sendStatus = function()
-{
-    io.emit('game status', game.Status);
+game.sendStatus = function() {
+    var status = pongGame.nextMove();
+    console.log(status);
+    io.emit('game status', status);
 }
 
-game.Status = {
-    paddles: [0.9, 0.8],
-    ball: [0.5, 0.2],
-    score: { player1: 100, player2: 200}
-}
+
