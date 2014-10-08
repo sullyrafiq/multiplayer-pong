@@ -34,7 +34,16 @@ io.on('connection', function(client){
 
 	client.on('disconnect', function(client){
 		io.emit('chat message', client.nickname + ": has left the group!")
-	})
+	});
+
+    client.on('up', function(msg){
+        console.log("Up pressed");
+    });
+
+    client.on('down', function(msg){
+        console.log("Down pressed");
+    });
+
 
     game.statusTimer=setInterval(game.sendStatus, 1000); //1000 will  run it every 1 second
 });

@@ -18,7 +18,7 @@ $(function() {
       $('.main-room').scrollTop($('.main-room').prop("scrollHeight"));
     });
 
-    var pong = new Common.Pong('pong');
+    var pong = new Common.Pong('pong', null, socket);
 
     var playerScore = $('span#player-score');
     var computerScore = $('span#computer-score');
