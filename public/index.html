@@ -6,6 +6,10 @@
 </head>
 <body>
 
+    <header>
+        <h4>Extreme Pong</h4>
+    </header>
+
     <div class="container">
         <div class="the-game">
             <canvas id="pong" width="800" height="500"></canvas>
@@ -24,6 +28,7 @@
             </div>
 
         </div>
+        <p>Score: <span id="player-score">0</span> - <span id="computer-score">0</span></p>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>

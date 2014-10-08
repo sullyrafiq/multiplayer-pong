@@ -19,5 +19,14 @@ $(function() {
     });
 
     var pong = new Common.Pong('pong');
+
+    var playerScore = $('span#player-score');
+    var computerScore = $('span#computer-score');
+    Common.Events.on('left-score', function(score) {
+        playerScore.text(score.left);
+    });
+    Common.Events.on('right-score', function(score) {
+        computerScore.text(score.right);
+    });
 		
 });
