@@ -149,21 +149,42 @@
 
         this.keyState = {};
         var self = this;
-        var makeHandler = function(state) {
+        self.upInterval = 0;
+        self.downInterval = 0;
+
+        var makeHandler = function(isPressed) {
             return function(e) {
                 var keyCode = (e || window.event).keyCode;
-                if (state) {
-                    self.keyState[keyCode] = true;
-                } else {
-                    delete self.keyState[keyCode];
-                }
 
                 if (keyCode == UP || keyCode == DOWN) {
-                     if (keyCode == UP) {
-                         self.socket.emit("up", "up");
-                     } else if (keyCode == DOWN) {
-                         self.socket.emit("down", "down");
-                     }
+                    if (isPressed) {
+                        self.keyState[keyCode] = true;
+                       // console.log("key upinterval = " + self.upInterval);
+                       // console.log("key downinterval = " + self.downInterval);
+                        if (keyCode == UP && self.upInterval==0 || self.upInterval == undefined ) {
+                            self.upInterval = setInterval(function() {
+                                self.socket.emit("up");
+                                return 10;
+                            }, 10);
+                        } else if (keyCode == DOWN &&  self.downInterval==0 || self.downInterval == undefined ) {
+                            self.downInterval = setInterval(function() {
+                                self.socket.emit("down");
+                                return 10;
+                            }, 10);
+                        }
+                    } else {
+                       // console.log("NOT PRESSED key upinterval = " + self.upInterval);
+                       // console.log("NOT PRESSED key downinterval = " + self.downInterval);
+                        delete self.keyState[keyCode];
+                        if (keyCode == UP) {
+                            clearInterval(self.upInterval);
+                            self.upInterval = 0;
+                        } else if (keyCode == DOWN) {
+                            clearInterval(self.downInterval);
+                            self.downInterval = 0;
+                        }
+                    }
+
                     return false;
                 } else {
                     return true;
