@@ -34,7 +34,8 @@ io.on('connection', function(client){
 	});
 
 	client.on('disconnect', function(msg){
-		io.emit('chat message', client.nickname + ": has left the group!")
+		io.emit('chat message', client.nickname + ": has left the group!");
+        pongGame.removePlayer(client.nickname);
 	});
 
     client.on('up', function(move){
@@ -58,17 +59,15 @@ io.on('connection', function(client){
 
         io.emit('status', pongGame.status());
     });
-
-    setInterval(function() {
-        var collision = pongGame.gameLoop();
-        if (collision != null) {
-            io.emit('bounce', collision);
-        }
-        io.emit('status', pongGame.status());
-
-    }, 50);
-
 });
+
+setInterval(function() {
+    var collision = pongGame.gameLoop();
+    if (collision != null) {
+        io.emit('bounce', collision);
+    }
+    io.emit('status', pongGame.status());
+}, 20);
 
 http.listen(app.get('port'), function(){
   console.log('listening on *:3000');
